@@ -1,0 +1,27 @@
+.form{
+    margin-top: 120px;
+    text-align: center;
+}
+.form form p label{
+    display: none;
+    /* visibility: hidden;
+    color: #7d7d7b;
+    float: left;
+    font-weight: bold; */
+}
+/* .form form p label::after{
+    visibility: visible;
+    content: "Foydalanuvchi nomi: ";
+} */
+.form form p input{
+    height: 40px;
+    border: 3px solid #7d7d7b;
+    border-radius: 25px;
+    background: linear-gradient(to top, #cdf071, white);
+}
+.form form .enter{
+    background: linear-gradient(to top, #cdf071, white);
+    border-radius: 20px;
+    color: #7d7d7b;
+    font-weight: bold;
+}

@@ -1,0 +1,104 @@
+ <!-- Menu -->
+ <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+      <a href="index.html" class="app-brand-link">
+        <span class="app-brand-logo demo me-1">
+          <span style="color: var(--bs-primary)">
+           
+          </span>
+        </span>
+        <span class="app-brand-text demo menu-text fw-semibold ms-2" style="color: #3a7bd5">Панель управления</span>
+      </a>
+
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+        <i class="mdi menu-toggle-icon d-xl-block align-middle mdi-20px"></i>
+      </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+     <!-- Dashboards -->
+        {% if '/dashboard/' in active_url %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'dashboard'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-view-dashboard-variant"></i>
+            <div>Панель</div>
+            </a>             
+        </li>
+
+        <!-- Forms & Tables -->
+        <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Категории и Модели</span></li>
+        <!-- Form Validation -->
+        {% if '/category-create/' in active_url %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'category-create'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-devices"></i>
+            <div data-i18n="Form Validation">Категории</div>
+            <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
+            </a>
+        </li>
+        <!-- Data Tables -->
+        {% if '/model-create/' in active_url %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'model-create'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-grid"></i>
+            <div data-i18n="Datatables">Модели</div>
+            <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
+            </a>
+        </li>
+        <!-- Misc -->
+        <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Создание объекта</span></li>
+        {% if '/device-create/' in active_url %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'device-create'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-server-plus-outline"></i>
+            <div>Добавить устройство</div>
+            </a>
+        </li>
+        {% if active_url == "category-create" %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'category-create'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-table-row-plus-before"></i>
+            <div>Добавить категорию</div>
+            </a>
+        </li>
+        {% if '/model-create/' in active_url %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'model-create'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-plus-box"></i>
+            <div>Добавить модель</div>
+            </a>
+        </li>
+        {% if '/responsible-create/' in active_url %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'responsible-create'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-account-plus"></i>
+            <div>Добавить ответственного</div>
+            </a>
+        </li>
+
+    </ul>
+  </aside>
+  <!-- / Menu -->

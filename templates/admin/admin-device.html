@@ -1,0 +1,379 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed layout-compact"
+  dir="ltr"
+  data-theme="theme-default"
+  data-template="vertical-menu-template-free">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Plant SCADA</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static 'admin/vendor/fonts/materialdesignicons.css' %}" />
+
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'admin/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'admin/vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'admin/css/demo.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Helpers -->
+    <script src="{% static 'admin/vendor/js/helpers.js' %}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'admin/js/config.js' %}"></script>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="index.html" class="app-brand-link">
+              <span class="app-brand-logo demo me-1">
+                <span style="color: var(--bs-primary)">
+                 
+                </span>
+              </span>
+              <span class="app-brand-text demo menu-text fw-semibold ms-2" style="color:#3ed89d">PLANTS CONTROL</span>
+            </a>
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+              <i class="mdi menu-toggle-icon d-xl-block align-middle mdi-20px"></i>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboards -->
+            <li class="menu-item">
+              <a href="{% url 'admin-index'%}" class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-view-dashboard-variant"></i>
+                <div>Панель</div>
+              </a>             
+            </li>
+
+            
+
+            <!-- Forms & Tables -->
+            <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Растения и Устройства</span></li>
+            <!-- Form Validation -->
+            <li class="menu-item">
+              <a href="{% url 'admin-plants'%}"  class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-sprout"></i>
+                <div data-i18n="Form Validation">Растения</div>
+                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">{{queryset.count}}</div>
+              </a>
+            </li>
+            <!-- Data Tables -->
+            <li class="menu-item active">
+              <a href="#"  class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-grid"></i>
+                <div data-i18n="Datatables">Устройства</div>
+                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>
+              </a>
+            </li>
+            <!-- Misc -->
+            <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Создание объекта</span></li>
+            <li class="menu-item">
+              <a
+                href="{% url 'plant-create'%}"
+                
+                class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-seed-plus-outline"></i>
+                <div>Добавить растение</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a
+                href="{% url 'room-create' %}"
+                
+                class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-plus-box"></i>
+                <div>Добавить комнату</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a
+                href="{% url 'responsible-create' %}"
+                
+                class="menu-link">
+                <i class="menu-icon tf-icons mdi mdi-account-plus"></i>
+                <div>Добавить ответственного</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="mdi mdi-menu mdi-24px"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="mdi mdi-magnify mdi-24px lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none bg-body"
+                    placeholder="Search..."
+                    aria-label="Search..." />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a
+                    class="nav-link dropdown-toggle hide-arrow p-0"
+                    href="javascript:void(0);"
+                    data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="{% static 'admin/img/avatars/face.jpg' %}" alt class="w-px-40 h-auto rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
+                    <li>
+                      <a class="dropdown-item pb-2 mb-1" href="#">
+                        <div class="d-flex align-items-center">
+                          <div class="flex-shrink-0 me-2 pe-1">
+                            <div class="avatar avatar-online">
+                              <img src="{% static 'admin/img/avatars/face.jpg'%}" alt class="w-px-40 h-auto rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <h6 class="mb-0">Администратор</h6>
+                            <small class="text-muted">Админ</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider my-1"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                        <span class="align-middle">Мой профиль</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="mdi mdi-cog-outline me-1 mdi-20px"></i>
+                        <span class="align-middle">Настройки</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider my-1"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">
+                        <i class="mdi mdi-power me-1 mdi-20px"></i>
+                        <span class="align-middle">Выйти</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+
+          <!-- / Navbar -->
+
+           <!-- Content wrapper -->
+           <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row gy-4">
+                
+                <!-- Hoverable Table rows -->
+                <div class="card">
+                  <h5 class="card-header">Журнал отчетов</h5>
+                  <div class="table-responsive text-nowrap">
+                  {% if queryset %}
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Название</th>
+                          <th>Пины</th>
+                          <th>Сенсор</th>
+                          <th>Насос</th>
+                          <th>Действия</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0">
+                      {% for m in queryset %}
+
+                        <tr>
+                          <td>
+                            <span class="fw-medium">{{ m.name}}</span>
+                          </td>
+                          <td>{{ m.soilpin_num}}</td>
+                          {% if m.soilpin_status == "False" %}
+                          <td><span class="badge rounded-pill bg-label-danger me-1">Отключен</span></td>
+                          {% elif  m.soilpin_status == "True" %}
+                          <td><span class="badge rounded-pill bg-label-primary me-1">Подключен</span></td>
+                          {% endif %}
+                          
+                          {% if m.pump_pin == "False" %}
+                          <td><span class="badge rounded-pill bg-label-danger me-1">Отключен</span></td>
+                          {% elif  m.pump_pin == "True" %}
+                          <td><span class="badge rounded-pill bg-label-primary me-1">Подключен</span></td>
+                          {% endif %}
+                          <td>
+                            <div class="dropdown">
+                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="mdi mdi-dots-vertical"></i>
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                  ><i class="mdi mdi-pencil-outline me-1"></i> Edit</a
+                                >
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                  ><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a
+                                >
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                    
+
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination pagination-rounded pagination-outline-primary">
+                        {% if queryset.has_previous %}
+                        <li class="page-item first">
+                          <a class="page-link waves-effect" href="?page=1"><i class="tf-icon mdi mdi-chevron-double-left"></i></a>
+                        </li>
+                        <li class="page-item prev">
+                          <a class="page-link waves-effect" href="?page={{ queryset.previous_page_number }}"><i class="tf-icon mdi mdi-chevron-left"></i></a>
+                        </li>
+                        {% endif %}
+                        {% for page_num in queryset.paginator.page_range %}
+                            <li class="page-item{% if queryset.number == page_num %} active{% endif %}">
+                                <a class="page-link waves-effect" href="?page={{ page_num }}">{{ page_num }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if queryset.has_next %}
+                        <li class="page-item next">
+                          <a class="page-link waves-effect" href="?page={{ queryset.next_page_number }}"><i class="tf-icon mdi mdi-chevron-right"></i></a>
+                        </li>
+                        <li class="page-item last">
+                          <a class="page-link waves-effect" href="?page={{ queryset.paginator.num_pages }}"><i class="tf-icon mdi mdi-chevron-double-right"></i></a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </nav>
+
+                    {% else %}
+                      <p>No data available.</p>
+                  {% endif %}
+
+                  
+                  </div>
+                </div>
+                <!--/ Hoverable Table rows -->
+                <div class="col-auto">
+                  <a href="{% url 'download_excel' %}" class="btn btn-primary">Download Excel</a>
+                </div>
+
+
+              </div>
+            </div>
+            <!-- / Content -->
+
+            
+
+
+            <div class="content-backdrop fade"></div>
+            
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'admin/vendor/libs/jquery/jquery.js'%}"></script>
+    <script src="{% static 'admin/vendor/js/bootstrap.js'%}"></script>
+
+    <!-- Vendors JS -->
+    <script src="{% static 'admin/vendor/libs/apex-charts/apexcharts.js'%}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'admin/vendor/js/menu.js'%}"></script>
+    
+
+    <script src="{% static 'admin/vendor/libs/popper/popper.js' %}"></script>
+    <!-- Page JS -->
+    <script src="{% static 'admin/js/dashboards-analytics.js'%}"></script>
+    <script>
+      function downloadExcel() {
+      const url = '/download-excel/'; // Replace this with the actual URL
+      fetch(url)
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.blob();
+          })
+          .then(blob => {
+              const downloadLink = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = downloadLink;
+              const filename = 'report_data.xlsx';
+              a.download = encodeURIComponent(filename); // Encoding filename
+              document.body.appendChild(a);
+              a.click();
+              window.URL.revokeObjectURL(downloadLink);
+          })
+          .catch(error => console.error('Error downloading Excel:', error));
+  }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    padding-bottom: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.wrapper{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1300px;
+}
+.container{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: auto;
+}
+
+.navbar {
+    overflow: hidden;
+    background: linear-gradient(to right, #cdf071 35%, white 65%);
+}
+.navbar h1 {
+    margin-left: 30px;
+    border: 3px solid white;
+    margin-right: 790px;
+    /* padding-left: 30px;    */
+    width: max-content;
+    border-radius: 30px;
+    font-size: 35px;
+    background-color: white;
+}
+.navbar button a{
+    color: #7d7d7b;
+}
+.navbar .menu-btn{
+    border: 3px solid #7d7d7b;
+    border-radius: 7px;
+    background: linear-gradient(to top, #cdf071, white);
+    color: darkslategray;
+    height: 30px;
+    margin-left: -180px;
+}
+.navbar .admin-btn{
+    height: 30px;
+    border: 3px solid #7d7d7b;
+    border-radius: 7px;
+    background: linear-gradient(to top, #cdf071, white);
+    color: darkslategray;
+
+}
+
+/* search qismiga tegishli css kodlar */
+
+.search-container{
+    float: right;
+    margin-top: -60px;
+}
+.search-container form{
+    margin-top: -30px;
+}
+.search-container .search{
+    width: 350px;
+    text-align: center;
+    border: 3px solid #7d7d7b;
+    height: 30px;
+    border-radius: 20px;
+    background: linear-gradient(to top, #cdf071, white);
+}
+::-webkit-input-placeholder{
+    font-style: italic;
+}
+.search-container .search-btn{
+    width: 60px;
+    height: 30px;
+    border: 3px solid #7d7d7b;
+    border-radius: 20px;
+    background: linear-gradient(to bottom, #cdf071, white);
+}
+.search-container .qrcode-btn{
+    width: 35px;
+    height: 30px;
+    border: 3px solid #7d7d7b;
+    border-radius: 20px;
+    background: linear-gradient(to bottom, #cdf071, white);
+}
+
+/* body qismi */
+
+.left {
+    width: 30%;
+    float: left;
+    text-align: center;
+}
+.left img{
+    height: 300px;
+    width: 370px;
+}
+.left div label{
+    font-weight: bold;
+    font-size: 25px;
+}
+.left div p{
+    font-size: 25px;
+    background: linear-gradient(to bottom, #cdf071, white);
+    border: 3px solid #7d7d7b;
+    border-radius: 25px;
+    margin-top: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.right{
+    width: 70%;
+    float: right;
+    text-align: center;
+}
+.right h1{
+    border: 3px solid #7d7d7b;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: none;
+    width: 35%;
+    margin: 0 auto;
+    margin-top: 40px;
+    background: linear-gradient(to top, #cdf071, white);
+}
+.right .special-container{
+    width: 70%;
+    border: 3px solid #7d7d7b;
+    border-radius: 15px;
+    padding: 50px;
+    margin: 0 auto;
+    background-color: #e6e6e6;
+}
+.right .special-container div label{
+    font-weight: bold;
+    font-size: 20px;
+    float: left;
+}
+.right .special-container div p{
+    font-size: 20px;
+    background: linear-gradient(to bottom, #cdf071, white);
+    border: 3px solid #7d7d7b;
+    border-radius: 25px;
+    width: 40%;
+    margin-left: 310px;
+}
+
+
+

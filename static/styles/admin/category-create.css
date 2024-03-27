@@ -1,0 +1,61 @@
+
+.wrap-form .form{
+    border: 3px solid #7d7d7d;
+    border-top-width: 10px;
+    border-right-style: double;
+    border-right-width: 10px;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 50px;
+    width: 75%;
+    height: max-content;
+    margin-top: 150px;
+    margin-left: 12%;
+    padding-top: 50px;
+    text-align: center;
+    background-color: lightgray;
+}
+.wrap-form .e-form form p label{
+    width: 25%;
+    float: left;
+    margin-left: 10%;
+}
+.wrap-form .e-form form p select{
+    width: 47%;
+    height: 40px;
+    background: linear-gradient(to top, #cdf071, white);
+    border-radius: 25px;
+    border: 3px solid #7d7d7b;
+}
+.wrap-form .e-form form p textarea{
+    background: linear-gradient(to top, #cdf071, white);
+    width: 47%;
+    border-radius: 25px;
+    border: 3px solid #7d7d7b;
+    height: 130px;
+}
+.wrap-form .form form p label{
+    font-size: 18px;
+    font-weight: bolder;
+    font-family: fantasy;
+}
+.wrap-form .form form p input{
+    width: 47%;
+    height: 40px;
+    border: 3px solid #7d7d7b;
+    border-radius: 25px;
+    background: linear-gradient(to top, #cdf071, white);
+}
+.wrap-form .form form p input[type=file]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.wrap-form .form form .submit-btn{
+    background: linear-gradient(to top, #cdf071, white);
+    border-radius: 10px;
+    color: darkslategray;
+    font-weight: bold;
+    margin-top: 5%;
+    padding: 10px;
+}
+.wrap-form .form form .submit-btn:hover{
+    background: linear-gradient(to bottom, #cdf071, white);
+}
