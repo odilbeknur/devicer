@@ -148,49 +148,39 @@
                   <div class="card">
                     <h5 class="card-header">Список устройств</h5>
                     <div class="table-responsive text-nowrap">
-                    {% if get_cat %}
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>Модель</th>
-                            <th>Ответственный</th>
-                            <th>Комната</th>
-                            <th>IP-адрес</th>
-                            <th>MAC-адрес</th>
-                            <th>Статус</th>
-                          </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
-                        {% for m in query %}
-  
-                          <tr>
-                            <td>
-                              <span class="fw-medium">{{ m.model_id}}</span>
-                            </td>
-                            <td>{{ m.responsible_id}}</td>
-                            <td>{{ m.room}}</td>
-                            <td>{{ m.ip_address}}</td>
-                            <td>{{ m.mac_address}}</td>
-                            <td>{{ m.is_online}}</td>
-                            <td>
-                              <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                  <i class="mdi mdi-dots-vertical"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="{% url 'device-detail' pk=m.inventory_number %}"
-                                    ><i class="mdi mdi-pencil-outline me-1"></i> Подробнее</a
-                                  >
-                                  <a class="dropdown-item" href="javascript:void(0);"
-                                    ><i class="mdi mdi-trash-can-outline me-1"></i>Изменить</a
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        {% endfor %}
-                        </tbody>
-                      </table>
+                      <form id="deviceForm" hx-post="{% url 'add_selected_devices' %}">
+                        {% csrf_token %}
+                        <table class="table table-hover" hx-trigger="change delay:500ms">
+                          <thead>
+                            <tr>
+                              <th></th> <!-- Add checkbox column -->
+                              <th>Модель</th>
+                              <th>Ответственный</th>
+                              <th>Комната</th>
+                              <th>IP-адрес</th>
+                              <th>MAC-адрес</th>
+                              <th>Статус</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0">
+                            {% for m in query %}
+                            <tr hx-post="target: #deviceForm">
+                              <td><input type="checkbox" name="selected_devices" value="{{ m.id }}"></td> <!-- Add checkbox -->
+                              <td>{{ m.comp_name }}</td>
+                              <td>
+                                <span class="fw-medium">{{ m.user_name }}</span>
+                              </td>
+                              <td>{{ m.ram }}</td>
+                              <td>{{ m.network.ethernet.ip }}</td>
+                              <td>{{ m.network.ethernet.mac }}</td>
+                              <td>{{ m.is_online }}</td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary">Add Selected Devices</button>
+                      </form>
+                      
                       
   <!--
                       <nav aria-label="Page navigation">
@@ -219,10 +209,8 @@
                         </ul>
                       </nav>
   
-                      {% else %}
                         <p>No data available.</p>
                     -->
-                    {% endif %}
                     
                     </div>
                   </div>

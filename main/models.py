@@ -46,33 +46,43 @@ class Device(models.Model):
     memory = models.CharField(max_length=70, blank=True)
     mac_address = models.CharField(max_length=50, blank=True)
     ip_address = models.CharField(max_length=50, blank=True)
-    inventar_number = models.IntegerField(unique=True, blank=True)
-    serial_number = models.CharField(max_length=100, blank=True, null=True)
+    inventory_number = models.CharField(max_length=10, unique=True, blank=True)
     description = models.TextField(blank=True, null=True)
     is_online = models.BooleanField(default=False)
     qr_code = models.ImageField(blank=True, upload_to='qr-code')
     
+    def generate_inventory_number(self):
+        category_code = self.category_id.id if self.category_id else ""
+        model_code = self.model_id.id if self.model_id else ""
+        room_number = self.room if self.room else ""
+        last_increment = Device.objects.aggregate(models.Max('id'))['id__max'] or 0
+        increment = str(last_increment + 1).zfill(4) 
+        return f"{category_code}{model_code}{room_number}{increment}"
+
     def generate_qr_code(self):
-        qr_data = f'Номер инвентаризации: {self.room}\n Модель: {self.id} \n Ответственный: {self.responsible_id.fullname} \n Комната: {self.room.name} \n MAC-адрес: {self.mac_address}'
+        qr_data = f'http://10.40.9.135:8000/main/dashboard/{self.inventory_number}/device-detail'
         try:
-            qr_image = qrcode.make(qr_data)
+            return qrcode.make(qr_data)
         except Exception as e:
             print(f"Error generating QR code: {e}")
             return None
-        return qr_image
+
+    def save_qr_code_image(self, qr_image):
+        if qr_image:
+            try:
+                filename = f'{self.inventory_number}--{self.responsible_id.fullname}--qrcode.png'
+                qr_offset = Image.new('RGB', (600, 600), 'white')
+                qr_offset.paste(qr_image)
+                with BytesIO() as stream:
+                    qr_offset.save(stream, 'PNG')
+                    self.qr_code.save(filename, File(stream), save=False)
+            except Exception as e:
+                print(f"Error saving QR code image: {e}")
 
     def save(self, *args, **kwargs):
+        if not self.inventory_number:
+            self.inventory_number = self.generate_inventory_number()
         if not self.qr_code:
             qr_image = self.generate_qr_code()
-            if qr_image:
-                files_name = f'{self.id}--{self.responsible_id.fullname}--qrcode.png'
-                try:
-                    qr_offset = Image.new('RGB', (600, 600), 'white')
-                    qr_offset.paste(qr_image)
-                    stream = BytesIO()
-                    qr_offset.save(stream, 'PNG')
-                    self.qr_code.save(files_name, File(stream), save=False)
-                    qr_offset.close()
-                except Exception as e:
-                    print(f"Error saving QR code image: {e}")
+            self.save_qr_code_image(qr_image)
         super().save(*args, **kwargs)

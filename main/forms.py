@@ -77,7 +77,7 @@ class DeviceCreateForm(forms.ModelForm):
     
     class Meta:
         model = Device
-        fields = ['category_id', 'model_id', 'responsible_id', 'username', 'room', 'processor', 'memory', 'mac_address', 'ip_address', 'inventar_number', 'serial_number', 'description']
+        fields = ['category_id', 'model_id', 'responsible_id', 'username', 'room', 'processor', 'memory', 'mac_address', 'ip_address', 'description']
         labels = {
             'category_id': 'Категория',
             'model_id': 'Модель',
@@ -88,8 +88,6 @@ class DeviceCreateForm(forms.ModelForm):
             'memory': 'Память',
             'mac_address': 'MAC-адрес',
             'ip_address': 'IP-адрес',
-            'inventar_number': 'Инвентарный номер',
-            'serial_number': 'Серийный номер',
             'description': 'Описание',
         }
     

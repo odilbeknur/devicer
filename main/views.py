@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CategoryCreateForm, DeviceCreateForm, ResponsibleCreateForm, ModelCreateForm
 from django.contrib import messages
+import requests
 
 
 
@@ -23,11 +24,41 @@ def baseview(request, pk):
     active_url = request.path
     return render(request, 'admin/admin-base.html', {'query': query, 'get_cat': get_cat})
 
+def newview(request):
+    #pull data from third party rest api
+    response = requests.get('http://10.40.9.25:8003/computers/')
+
+    #convert reponse data into json
+    query = response.json()
+    #print(names)
+    return render(request, "admin/admin-new.html", {'query': query})
+
 def models_view(request):
     category_id = request.GET.get('category_id')
     models  = Model.objects.filter(category_id=category_id)
     return render(request, 'admin/model-options.html', {"models": models})
 
+def add_selected_devices(request):
+    if request.method == 'POST':
+        selected_device_ids = request.POST.getlist('selected_devices')
+        if selected_device_ids:
+            try:
+                # Retrieve the selected devices from the database
+                selected_devices = Device.objects.filter(id__in=selected_device_ids)
+                
+                # Add any additional processing logic here if needed
+                for device in selected_devices:
+                    # Example additional processing: Update status or perform validation
+                    device.is_selected = True
+                    device.save()
+
+                return JsonResponse({'success': True})
+            except Device.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'One or more devices not found.'})
+        else:
+            return JsonResponse({'success': False, 'error': 'No devices selected.'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 
 class CategoryCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -104,7 +135,7 @@ class DeviceCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
                 return self.form_invalid(form)
 
 def DeviceDetailView(request, pk):
-    query = Device.objects.filter(id=pk)
+    query = Device.objects.filter(inventory_number=pk)
     responsible = Responsible.objects.filter(id=pk)
     #form = ProductDetailUpdateForm(request.POST or None, instance=eq)
     #if request.method == 'POST' and form.is_valid():
