@@ -1,6 +1,7 @@
 from dataclasses import fields
 from django import forms
 from .models import Device, Category, Responsible, Model
+from rooms.models import Room
 from django.core.exceptions import ValidationError
 from django.utils.safestring import SafeString
 
@@ -34,6 +35,14 @@ class ModelCreateForm(forms.ModelForm):
             field.widget.attrs.update({'class': 'form-control'})
         self.initial['position'] = ''
         
+department_choices = (
+        ('', 'Выберите отдел'),
+        ('Отдел цифровизации', 'Отдел цифровизации'),
+        ('Отдел инвестиций', 'Отдел инвестиций'),
+        ('Международный отдел', 'Международный отдел')
+
+)
+                
 position_choices = (
         ('', 'Выберите должность'),
         ('Тех.персонал', 'Тех.персонал'),
@@ -42,15 +51,19 @@ position_choices = (
         ('Начальник отдела', 'Начальник отдела'),
         ('Начальник управления', 'Начальник управления'),
 
-    )         
+)         
 
 class ResponsibleCreateForm(forms.ModelForm):
-    position = forms.ChoiceField(choices=position_choices)
+    position = forms.ChoiceField(choices=position_choices, label='Должность')
+    department = forms.ChoiceField(choices=department_choices, label='Отдел')
+
     class Meta:
         model = Responsible
-        fields = ['fullname', 'position', 'image']
+        fields = ['fullname', 'username', 'department', 'position', 'image']
         labels = {
             'fullname': 'Ф.И.О. ответственного',
+            'username':'Логин',
+            'department': 'Отдел',
             'position':'Должность',
             'image': 'Фото'
         }
@@ -77,17 +90,17 @@ class DeviceCreateForm(forms.ModelForm):
     
     class Meta:
         model = Device
-        fields = ['category_id', 'model_id', 'responsible_id', 'username', 'room', 'processor', 'memory', 'mac_address', 'ip_address', 'description']
+        fields = ['category_id', 'model_id', 'responsible_id', 'room', 'mac_address', 'description']
         labels = {
             'category_id': 'Категория',
             'model_id': 'Модель',
             'responsible_id': 'Ответственный',
-            'username': 'Наименование',
+            #'username': '',
             'room': 'Комната',
-            'processor': 'Процессор',
-            'memory': 'Память',
+            #'processor': 'Процессор',
+            #'memory': 'Память',
             'mac_address': 'MAC-адрес',
-            'ip_address': 'IP-адрес',
+            #'ip_address': 'IP-адрес',
             'description': 'Описание',
         }
     
@@ -101,8 +114,16 @@ class DeviceCreateForm(forms.ModelForm):
             self.fields['model_id'].queryset = Model.objects.filter(category_id=category_id)
         
         
-        
-
+class NewDeviceForm(forms.ModelForm): 
+    responsible_id = forms.ModelChoiceField(queryset=Responsible.objects.all(), label='Ответственный', widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4"}))
+    room = forms.ModelChoiceField(queryset=Room.objects.all(), label='Комната', widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4"}))
+    class Meta:
+        model = Device
+        fields = ['responsible_id', 'room']        
+    labels = {
+            'responsible_id': 'Категория',
+            'room': 'Модель',
+        }
 
 
 

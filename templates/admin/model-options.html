@@ -1,3 +1,7 @@
 {% for model in models %}
 <option value="{{ model.id }}">{{ model.name }}</option>
 {% endfor %}
+
+{% for dep in departments %}
+<option value="{{ dep.id }}">{{ dep.name }}</option>
+{% endfor %}

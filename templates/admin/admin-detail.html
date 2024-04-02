@@ -138,7 +138,6 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
           
-          {% for d in query %}
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="py-3 mb-4"><span class="text fw-light">{{d.responsible_id}} - </span> {{d.model_id}}</h4>
 
@@ -148,13 +147,11 @@
                     <!-- Account -->
                     <div class="card-body d-flex align-items-start align-items-sm-center justify-content-between">
                       <div>
-                        {% for resp in responsible %}
-                        {% if resp.image %}
-                        <img src="{{ resp.image.url }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar">
+                        {% if responsible.image %}
+                        <img src="{{ responsible.image.url }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar">
                         {% else %}
                         <img src="{% static 'admin/img/avatars/face.jpg' %}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar">
                         {% endif %}
-                        {% endfor %}
                       </div>
                       <img src="{{ d.qr_code.url }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="qr-code">
                     </div>
@@ -170,7 +167,7 @@
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Логин: {{ d.responsible_id }}</a>
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">IP-адрес: {{ d.ip_address }}</a>
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">MAC-адрес: {{ d.mac_address }}</a>
-                              <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Инвентаризационный номер: {{ d.inv_number }}</a>
+                              <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Инвентаризационный номер: {{ d.inventory_number }}</a>
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Описание: {{ d.id }}</a>
                             </div>
                           </div>
@@ -283,7 +280,6 @@
               </div>
             </div>          
             
-          {% endfor %}
             <div class="content-backdrop fade"></div>
           </div>
           <!-- Content wrapper -->

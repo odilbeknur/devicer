@@ -143,43 +143,37 @@
               <!-- Devices table -->
               <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="row gy-4">
-                
+                  {% if messages %}
+                  {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+              
                   <!-- Hoverable Table rows -->
                   <div class="card">
                     <h5 class="card-header">Список устройств</h5>
                     <div class="table-responsive text-nowrap">
-                      <form id="deviceForm" hx-post="{% url 'add_selected_devices' %}">
-                        {% csrf_token %}
-                        <table class="table table-hover" hx-trigger="change delay:500ms">
+                        <table class="table table-hover">
                           <thead>
                             <tr>
-                              <th></th> <!-- Add checkbox column -->
                               <th>Модель</th>
-                              <th>Ответственный</th>
+                              <th>Логин</th>
                               <th>Комната</th>
                               <th>IP-адрес</th>
                               <th>MAC-адрес</th>
-                              <th>Статус</th>
+                              <th>Ответственный</th>
+                              <th>Действие</th>
                             </tr>
                           </thead>
                           <tbody class="table-border-bottom-0">
-                            {% for m in query %}
-                            <tr hx-post="target: #deviceForm">
-                              <td><input type="checkbox" name="selected_devices" value="{{ m.id }}"></td> <!-- Add checkbox -->
-                              <td>{{ m.comp_name }}</td>
-                              <td>
-                                <span class="fw-medium">{{ m.user_name }}</span>
-                              </td>
-                              <td>{{ m.ram }}</td>
-                              <td>{{ m.network.ethernet.ip }}</td>
-                              <td>{{ m.network.ethernet.mac }}</td>
-                              <td>{{ m.is_online }}</td>
-                            </tr>
+                            {% for d in query %}
+                                {% include 'admin/scanlist.html' %}
                             {% endfor %}
                           </tbody>
                         </table>
-                        <button type="submit" class="btn btn-primary">Add Selected Devices</button>
-                      </form>
                       
                       
   <!--
@@ -223,7 +217,80 @@
                 </div>
                 
               </div>
-              <!-- / Devices table -->            
+              <!-- / Devices table -->       
+
+               <!-- Modal -->
+               <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modalCenterTitle">Сохранить устройство</h4>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    </div>
+                    <form action="">
+                      
+                      <input type="hidden" name="comp_name" value="{{ m.comp_name }}">
+                      <input type="hidden" name="user_name" value="{{ m.user_name }}">
+                      <input type="hidden" name="ram" value="{{ m.ram }}">
+                      <input type="hidden" name="ip_address" value="{{ m.network.ethernet.ip }}">
+                      <input type="hidden" name="mac_address" value="{{ m.network.ethernet.mac }}">
+                      
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col mb-2 mt-1">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter Name" />
+                              <label for="nameWithTitle">Name</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col mb-2 mt-1">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="text"
+                                id="nameWithTitle"
+                                class="form-control"
+                                placeholder="Enter Name" />
+                              <label for="nameWithTitle">Username</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col mb-2 mt-1">
+                            <div class="form-floating form-floating-outline">
+                              <input
+                                type="text"
+                                id="nameWithTitle"
+                                class="form-control"
+                                placeholder="Enter Name" />
+                              <label for="nameWithTitle">ram</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+                    
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Закрыть
+                      </button>
+                      <button type="button" class="btn btn-primary">Сохранить</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--Modal closed-->
+
+
 
             <div class="content-backdrop fade"></div>
           </div>

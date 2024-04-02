@@ -1,0 +1,14 @@
+<tr>
+    <td>{{ d.comp_name }}</td>
+    <td>{{ d.user_name }}</td>
+    <td>{{ d.ram }}</td>
+    <td>{{ d.network.ethernet.ip }}</td>
+    <td>{{ d.network.ethernet.mac }}</td>
+    <td><button class='btn' 
+        hx-get="{% url 'edit_device' d._id %}" 
+        hx-target="closest tr" 
+        hx-swap="outerHTML">
+        <svg class="bi bi-pencil" width="32" height="32">
+            <use xlink:href="#pencil">
+        </svg></button></td>
+</tr>

@@ -1,0 +1,23 @@
+<tr>
+    <td>{{ d.comp_name }}</td>
+    <td>{{ d.user_name }}</td>
+    <td>{{ d.ram }}</td>
+    <td>{{ d.network.ethernet.ip }}</td>
+    <td>{{ d.network.ethernet.mac }}</td>
+    <td>
+        <td><button class='btn' 
+            hx-get="" 
+            hx-target="closest tr" 
+            hx-swap="outerHTML">
+            Edit
+    </td>
+    <td>
+        <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#modalCenter">
+                Сохранить
+        </button>
+    </td>
+</tr>

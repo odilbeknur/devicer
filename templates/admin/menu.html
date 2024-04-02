@@ -45,14 +45,14 @@
             </a>
         </li>
         <!-- Data Tables -->
-        {% if '/model-create/' in active_url %}
+        {% if '/scan-view/' in active_url %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
         {% endif %}    
-            <a href="{% url 'model-create'%}" class="menu-link">
+            <a href="{% url 'scan-view'%}" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-grid"></i>
-            <div data-i18n="Datatables">Модели</div>
+            <div data-i18n="Datatables">Новые устройства</div>
             <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
             </a>
         </li>

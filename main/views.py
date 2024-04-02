@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from .models import Category, Model, Device
 from devicer_admin.models import Responsible
@@ -6,7 +6,7 @@ from django.db.models import Count, Q
 from django.views.generic import ListView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import CategoryCreateForm, DeviceCreateForm, ResponsibleCreateForm, ModelCreateForm
+from .forms import CategoryCreateForm, DeviceCreateForm, ResponsibleCreateForm, ModelCreateForm, NewDeviceForm
 from django.contrib import messages
 import requests
 
@@ -26,12 +26,75 @@ def baseview(request, pk):
 
 def newview(request):
     #pull data from third party rest api
-    response = requests.get('http://10.40.9.25:8003/computers/')
-
-    #convert reponse data into json
+    response = requests.get('http://10.40.9.25:8001/computers/')
     query = response.json()
-    #print(names)
-    return render(request, "admin/admin-new.html", {'query': query})
+
+
+    form = NewDeviceForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('scan-view')
+    
+    return render(request, "admin/scan-view.html", {'query': query, 'form':form})
+
+def get_device_list(request):
+     
+    response = requests.get('http://10.40.9.25:8001/computers/')
+    query = response.json()
+
+
+    return render(request, 'admin/scanlist.html', {'query': query, 'form':form})
+
+def savescan(request):
+    comp_name = request.POST.get('comp_name')
+    user_name = request.POST.get('user_name')
+    ram = request.POST.get('ram')
+    ip_address = request.POST.get('ip_address')
+    mac_address = request.POST.get('mac_address')
+
+    # Create a new instance of your model and save it to the database
+    new_device = Device(
+        category_id = "Персональный компьютер",
+        model_id = "Dell",
+        responsible_id = "Дастан",
+        username = user_name,
+        room="200", 
+        processor="Test", 
+        memory=ram, 
+        ip_address=ip_address, 
+        mac_address=mac_address,
+        description = "Test"
+        )
+    new_device.save()
+    
+    return render(request, "admin/scan-view.html", {'query': query, 'form':form})
+
+def edit_student(request, student_pk):
+    student = Student.objects.get(pk=student_pk)
+    context = {}
+    context['student'] = student
+    context['form'] = StudentForm(initial={
+        'first_name':student.first_name,
+        'last_name': student.last_name,
+        'gender': student.gender,
+        'age': student.age,
+        'major': student.major
+    })
+    return render(request, 'partial/student/edit_student.html', context)
+
+def edit_student_submit(request, student_pk):
+    context = {}
+    student = Student.objects.get(pk=student_pk)
+    context['student'] = student
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request, 'partial/student/edit_student.html', context)
+    return render(request, 'partial/student/student_row.html', context)    
+
+
 
 def models_view(request):
     category_id = request.GET.get('category_id')
@@ -135,10 +198,42 @@ class DeviceCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
                 return self.form_invalid(form)
 
 def DeviceDetailView(request, pk):
-    query = Device.objects.filter(inventory_number=pk)
-    responsible = Responsible.objects.filter(id=pk)
-    #form = ProductDetailUpdateForm(request.POST or None, instance=eq)
-    #if request.method == 'POST' and form.is_valid():
-    #    form.save()
-    #    return redirect('device-detail', pk=eq.pk)
-    return render(request, 'admin/admin-detail.html', {'query': query ,'responsible':responsible})
+    device = get_object_or_404(Device, inventory_number=pk)
+    responsible = get_object_or_404(Responsible, id=device.responsible_id.id)
+    
+    # Get the fullname from the device
+        #form = ProductDetailUpdateForm(request.POST or None, instance=eq)
+        #if request.method == 'POST' and form.is_valid():
+        #    form.save()
+        #    return redirect('device-detail', pk=eq.pk)
+   
+    print(responsible.image)
+    return render(request, 'admin/admin-detail.html', {'d': device ,'responsible':responsible})
+
+
+
+def edit_device(request, student_pk):
+    student = Student.objects.get(pk=student_pk)
+    context = {}
+    context['student'] = student
+    context['form'] = StudentForm(initial={
+        'first_name':student.first_name,
+        'last_name': student.last_name,
+        'gender': student.gender,
+        'age': student.age,
+        'major': student.major
+    })
+    return render(request, 'partial/student/edit_student.html', context)
+
+def edit_device_submit(request, student_pk):
+    context = {}
+    student = Student.objects.get(pk=student_pk)
+    context['student'] = student
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request, 'partial/student/edit_student.html', context)
+    else:
+        return render(request, 'partial/student/student_row.html', context)
