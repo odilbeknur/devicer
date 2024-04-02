@@ -139,19 +139,23 @@
           <div class="content-wrapper">
           
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="py-3 mb-4"><span class="text fw-light">{{d.responsible_id}} - </span> {{d.model_id}}</h4>
+              <h4 class="py-3 mb-4"><span class="text fw-light"> Ответственный - </span> {{d.responsible_id}}</h4>
 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="card mb-4">
                     <!-- Account -->
                     <div class="card-body d-flex align-items-start align-items-sm-center justify-content-between">
-                      <div>
-                        {% if responsible.image %}
-                        <img src="{{ responsible.image.url }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        {% if m.image %}
+                        <img src="{{ m.image.url }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar">
                         {% else %}
                         <img src="{% static 'admin/img/avatars/face.jpg' %}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar">
                         {% endif %}
+                        <div class="button-wrapper">
+                          <h1 class="mb-0">{{ d.model_id}}</h1>
+                          <h5 class="text-muted">{{ d.inventory_number }}</h5>
+                        </div>
                       </div>
                       <img src="{{ d.qr_code.url }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="qr-code">
                     </div>
@@ -164,7 +168,7 @@
                           <small class="text-light fw-medium">Детали</small>
                           <div class="demo-inline-spacing mt-3">
                             <div class="list-group">
-                              <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Логин: {{ d.responsible_id }}</a>
+                              <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Логин: {{ responsible.username }}</a>
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">IP-адрес: {{ d.ip_address }}</a>
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">MAC-адрес: {{ d.mac_address }}</a>
                               <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">Инвентаризационный номер: {{ d.inventory_number }}</a>
@@ -173,7 +177,62 @@
                           </div>
                         </div>
                         <!--/ List group Flush (Without main border) -->
-                        
+                        <div class="col-xl-12">
+                          <div class="nav-align-top mb-4 mt-4">
+                            <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                              <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link active waves-effect waves-light" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-home" aria-controls="navs-pills-justified-home" aria-selected="true">
+                                  <i class="tf-icons mdi mdi-home-outline me-1"></i><span class="d-none d-sm-block">ПК</span><span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger ms-1">3</span>
+                                </button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link waves-effect waves-light" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile" aria-selected="false" tabindex="-1">
+                                  <i class="tf-icons mdi mdi-account-outline me-1"></i><span class="d-none d-sm-block">Монитор</span>
+                                </button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link waves-effect waves-light" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="false" tabindex="-1">
+                                  <i class="tf-icons mdi mdi-message-text-outline me-1"></i><span class="d-none d-sm-block">Принтер</span>
+                                </button>
+                              </li>
+                            </ul>
+                            <div class="tab-content">
+                              <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
+                                <p>
+                                  Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps
+                                  powder. Bear claw candy topping.
+                                </p>
+                                <p class="mb-0">
+                                  Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon
+                                  jelly-o jelly-o ice cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow
+                                  jujubes sweet.
+                                </p>
+                              </div>
+                              <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+                                <p>
+                                  Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer candy oat cake ice
+                                  cream. Gummies halvah tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
+                                  cheesecake fruitcake.
+                                </p>
+                                <p class="mb-0">
+                                  Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin pie tiramisu halvah
+                                  cotton candy liquorice caramels.
+                                </p>
+                              </div>
+                              <div class="tab-pane fade" id="navs-pills-justified-messages" role="tabpanel">
+                                <p>
+                                  Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans macaroon gummies
+                                  cupcake gummi bears cake chocolate.
+                                </p>
+                                <p class="mb-0">
+                                  Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple pie brownie cake. Sweet
+                                  roll icing sesame snaps caramels danish toffee. Brownie biscuit dessert dessert. Pudding jelly
+                                  jelly-o tart brownie jelly.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -185,98 +244,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-6 col-md-6">
-                  <div class="row gy-4">
-                    <!-- Total Profit line chart -->
-                    <div class="col-sm-6">
-                      <div class="card h-100">
-                        <div class="card-header pb-0">
-                          <h4 class="mb-0">$86.4k</h4>
-                        </div>
-                        <div class="card-body" style="position: relative;">
-                          <div id="totalProfitLineChart" class="mb-3" style="min-height: 90px;"><div id="apexcharts670360r3" class="apexcharts-canvas apexcharts670360r3 apexcharts-theme-light" style="width: 120px; height: 90px;"><svg id="SvgjsSvg1249" width="120" height="90" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" class="apexcharts-svg apexcharts-zoomable" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1251" class="apexcharts-inner apexcharts-graphical" transform="translate(3, 15)"><defs id="SvgjsDefs1250"><clipPath id="gridRectMask670360r3"><rect id="SvgjsRect1256" width="115" height="78" x="-3.5" y="-1.5" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="forecastMask670360r3"></clipPath><clipPath id="nonForecastMask670360r3"></clipPath><clipPath id="gridRectMarkerMask670360r3"><rect id="SvgjsRect1257" width="136" height="103" x="-14" y="-14" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><line id="SvgjsLine1255" x1="0" y1="0" x2="0" y2="75" stroke="#b6b6b6" stroke-dasharray="3" stroke-linecap="butt" class="apexcharts-xcrosshairs" x="0" y="0" width="1" height="75" fill="#b1b9c4" filter="none" fill-opacity="0.9" stroke-width="1"></line><g id="SvgjsG1274" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1275" class="apexcharts-xaxis-texts-g" transform="translate(0, -4)"></g></g><g id="SvgjsG1284" class="apexcharts-grid"><g id="SvgjsG1285" class="apexcharts-gridlines-horizontal"></g><g id="SvgjsG1286" class="apexcharts-gridlines-vertical"><line id="SvgjsLine1287" x1="0" y1="0" x2="0" y2="75" stroke="#b4b2b7" stroke-dasharray="6" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1288" x1="21.6" y1="0" x2="21.6" y2="75" stroke="#b4b2b7" stroke-dasharray="6" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1289" x1="43.2" y1="0" x2="43.2" y2="75" stroke="#b4b2b7" stroke-dasharray="6" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1290" x1="64.80000000000001" y1="0" x2="64.80000000000001" y2="75" stroke="#b4b2b7" stroke-dasharray="6" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1291" x1="86.4" y1="0" x2="86.4" y2="75" stroke="#b4b2b7" stroke-dasharray="6" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1292" x1="108" y1="0" x2="108" y2="75" stroke="#b4b2b7" stroke-dasharray="6" stroke-linecap="butt" class="apexcharts-gridline"></line></g><line id="SvgjsLine1294" x1="0" y1="75" x2="108" y2="75" stroke="transparent" stroke-dasharray="0" stroke-linecap="butt"></line><line id="SvgjsLine1293" x1="0" y1="1" x2="0" y2="75" stroke="transparent" stroke-dasharray="0" stroke-linecap="butt"></line></g><g id="SvgjsG1258" class="apexcharts-line-series apexcharts-plot-series"><g id="SvgjsG1259" class="apexcharts-series" seriesName="seriesx1" data:longestSeries="true" rel="1" data:realIndex="0"><path id="SvgjsPath1273" d="M 0 75L 21.6 45L 43.2 67.5L 64.8 30L 86.4 52.5L 108 7.5" fill="none" fill-opacity="1" stroke="rgba(144,85,253,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="3" stroke-dasharray="0" class="apexcharts-line" index="0" clip-path="url(#gridRectMask670360r3)" pathTo="M 0 75L 21.6 45L 43.2 67.5L 64.8 30L 86.4 52.5L 108 7.5" pathFrom="M -1 75L -1 75L 21.6 75L 43.2 75L 64.8 75L 86.4 75L 108 75"></path><g id="SvgjsG1260" class="apexcharts-series-markers-wrap" data:realIndex="0"><g id="SvgjsG1262" class="apexcharts-series-markers" clip-path="url(#gridRectMarkerMask670360r3)"><circle id="SvgjsCircle1263" r="6" cx="0" cy="75" class="apexcharts-marker no-pointer-events wmxa8wnbm" stroke="transparent" fill="transparent" fill-opacity="1" stroke-width="3" stroke-opacity="0.9" rel="0" j="0" index="0" default-marker-size="6"></circle><circle id="SvgjsCircle1264" r="6" cx="21.6" cy="45" class="apexcharts-marker no-pointer-events woxhlbxa8j" stroke="transparent" fill="transparent" fill-opacity="1" stroke-width="3" stroke-opacity="0.9" rel="1" j="1" index="0" default-marker-size="6"></circle></g><g id="SvgjsG1265" class="apexcharts-series-markers" clip-path="url(#gridRectMarkerMask670360r3)"><circle id="SvgjsCircle1266" r="6" cx="43.2" cy="67.5" class="apexcharts-marker no-pointer-events w96xt9vitg" stroke="transparent" fill="transparent" fill-opacity="1" stroke-width="3" stroke-opacity="0.9" rel="2" j="2" index="0" default-marker-size="6"></circle></g><g id="SvgjsG1267" class="apexcharts-series-markers" clip-path="url(#gridRectMarkerMask670360r3)"><circle id="SvgjsCircle1268" r="6" cx="64.8" cy="30" class="apexcharts-marker no-pointer-events w7a34h25d" stroke="transparent" fill="transparent" fill-opacity="1" stroke-width="3" stroke-opacity="0.9" rel="3" j="3" index="0" default-marker-size="6"></circle></g><g id="SvgjsG1269" class="apexcharts-series-markers" clip-path="url(#gridRectMarkerMask670360r3)"><circle id="SvgjsCircle1270" r="6" cx="86.4" cy="52.5" class="apexcharts-marker no-pointer-events wvfl27ie8" stroke="transparent" fill="transparent" fill-opacity="1" stroke-width="3" stroke-opacity="0.9" rel="4" j="4" index="0" default-marker-size="6"></circle></g><g id="SvgjsG1271" class="apexcharts-series-markers" clip-path="url(#gridRectMarkerMask670360r3)"><circle id="SvgjsCircle1272" r="6" cx="108" cy="7.5" class="apexcharts-marker no-pointer-events wkpprlxm4" stroke="#9055fd" fill="#ffffff" fill-opacity="1" stroke-width="3" stroke-opacity="0.9" rel="5" j="5" index="0" default-marker-size="6"></circle></g></g></g><g id="SvgjsG1261" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1295" x1="0" y1="0" x2="108" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" stroke-linecap="butt" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1296" x1="0" y1="0" x2="108" y2="0" stroke-dasharray="0" stroke-width="0" stroke-linecap="butt" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1297" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1298" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1299" class="apexcharts-point-annotations"></g><rect id="SvgjsRect1300" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-zoom-rect"></rect><rect id="SvgjsRect1301" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-selection-rect"></rect></g><rect id="SvgjsRect1254" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe"></rect><g id="SvgjsG1282" class="apexcharts-yaxis" rel="0" transform="translate(-8, 0)"><g id="SvgjsG1283" class="apexcharts-yaxis-texts-g"></g></g><g id="SvgjsG1252" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend" style="max-height: 45px;"></div></div></div>
-                          <h6 class="text-center mb-0">Total Profit</h6>
-                        <div class="resize-triggers"><div lass="expand-trigger"><div style="width: 161px; height: 152px;"></div></div><div class="contract-trigger"></div></div></div>
-                      </div>
-                    </div>
-                    <!--/ Total Profit line chart -->
-                    <!-- Total Profit Weekly Project -->
-                    <div class="col-sm-6">
-                      <div class="card h-100">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                          <div class="avatar">
-                            <div class="avatar-initial bg-secondary rounded-circle shadow">
-                              <i class="mdi mdi-poll mdi-24px"></i>
-                            </div>
-                          </div>
-                          <div class="dropdown">
-                            <button class="btn p-0" type="button" id="totalProfitID" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="totalProfitID">
-                              <a class="dropdown-item waves-effect" href="javascript:void(0);">Refresh</a>
-                              <a class="dropdown-item waves-effect" href="javascript:void(0);">Share</a>
-                              <a class="dropdown-item waves-effect" href="javascript:void(0);">Update</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card-body mt-mg-1">
-                          <h6 class="mb-2">Total Profit</h6>
-                          <div class="d-flex flex-wrap align-items-center mb-2 pb-1">
-                            <h4 class="mb-0 me-2">$25.6k</h4>
-                            <small class="text-success mt-1">+42%</small>
-                          </div>
-                          <small>Weekly Project</small>
-                        </div>
-                      </div>
-                    </div>
-                    <!--/ Total Profit Weekly Project -->
-                    <!-- New Yearly Project -->
-                    <div class="col-sm-6">
-                      <div class="card h-100">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                          <div class="avatar">
-                            <div class="avatar-initial bg-primary rounded-circle shadow-sm">
-                              <i class="mdi mdi-wallet-travel mdi-24px"></i>
-                            </div>
-                          </div>
-                          <div class="dropdown">
-                            <button class="btn p-0" type="button" id="newProjectID" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="mdi mdi-dots-vertical mdi-24px"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="newProjectID">
-                              <a class="dropdown-item waves-effect" href="javascript:void(0);">Refresh</a>
-                              <a class="dropdown-item waves-effect" href="javascript:void(0);">Share</a>
-                              <a class="dropdown-item waves-effect" href="javascript:void(0);">Update</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card-body mt-mg-1">
-                          <h6 class="mb-2">New Project</h6>
-                          <div class="d-flex flex-wrap align-items-center mb-2 pb-1">
-                            <h4 class="mb-0 me-2">862</h4>
-                            <small class="text-danger mt-1">-18%</small>
-                          </div>
-                          <small>Yearly Project</small>
-                        </div>
-                      </div>
-                    </div>
-                    <!--/ New Yearly Project -->
-                    <!-- Sessions chart -->
-                    <div class="col-sm-6">
-                      <div class="card h-100">
-                        <div class="card-header pb-0">
-                          <h4 class="mb-0">2,856</h4>
-                        </div>
-                        <div class="card-body" style="position: relative;">
-                          <div id="sessionsColumnChart" class="mb-3" style="min-height: 90px;"><div id="apexchartsumhx6hi" class="apexcharts-canvas apexchartsumhx6hi apexcharts-theme-light" style="width: 120px; height: 90px;"><svg id="SvgjsSvg1302" width="120" height="90" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" class="apexcharts-svg apexcharts-zoomable" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1304" class="apexcharts-inner apexcharts-graphical" transform="translate(12.666666666666666, 20)"><defs id="SvgjsDefs1303"><linearGradient id="SvgjsLinearGradient1307" x1="0" y1="0" x2="0" y2="1"><stop id="SvgjsStop1308" stop-opacity="0.4" stop-color="rgba(216,227,240,0.4)" offset="0"></stop><stop id="SvgjsStop1309" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop><stop id="SvgjsStop1310" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop></linearGradient><clipPath id="gridRectMaskumhx6hi"><rect id="SvgjsRect1312" width="114.00000000000001" height="70" x="-10.666666666666666" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="forecastMaskumhx6hi"></clipPath><clipPath id="nonForecastMaskumhx6hi"></clipPath><clipPath id="gridRectMarkerMaskumhx6hi"><rect id="SvgjsRect1313" width="96.66666666666667" height="74" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><rect id="SvgjsRect1311" width="0" height="70" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke-dasharray="3" fill="url(#SvgjsLinearGradient1307)" class="apexcharts-xcrosshairs" y2="70" filter="none" fill-opacity="0.9"></rect><g id="SvgjsG1333" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1334" class="apexcharts-xaxis-texts-g" transform="translate(0, -4)"></g></g><g id="SvgjsG1343" class="apexcharts-grid"><g id="SvgjsG1344" class="apexcharts-gridlines-horizontal" style="display: none;"><line id="SvgjsLine1346" x1="-8.666666666666666" y1="0" x2="101.33333333333334" y2="0" stroke="#e0e0e0" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1347" x1="-8.666666666666666" y1="17.5" x2="101.33333333333334" y2="17.5" stroke="#e0e0e0" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1348" x1="-8.666666666666666" y1="35" x2="101.33333333333334" y2="35" stroke="#e0e0e0" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1349" x1="-8.666666666666666" y1="52.5" x2="101.33333333333334" y2="52.5" stroke="#e0e0e0" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line><line id="SvgjsLine1350" x1="-8.666666666666666" y1="70" x2="101.33333333333334" y2="70" stroke="#e0e0e0" stroke-dasharray="0" stroke-linecap="butt" class="apexcharts-gridline"></line></g><g id="SvgjsG1345" class="apexcharts-gridlines-vertical" style="display: none;"></g><line id="SvgjsLine1352" x1="0" y1="70" x2="92.66666666666667" y2="70" stroke="transparent" stroke-dasharray="0" stroke-linecap="butt"></line><line id="SvgjsLine1351" x1="0" y1="1" x2="0" y2="70" stroke="transparent" stroke-dasharray="0" stroke-linecap="butt"></line></g><g id="SvgjsG1314" class="apexcharts-bar-series apexcharts-plot-series"><g id="SvgjsG1315" class="apexcharts-series" rel="1" seriesName="seriesx1" data:realIndex="0"><rect id="SvgjsRect1318" width="4.633333333333334" height="70" x="-2.316666666666667" y="0" rx="4" ry="4" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#F0F2F8" class="apexcharts-backgroundBar"></rect><path id="SvgjsPath1320" d="M -2.316666666666667 66L -2.316666666666667 47.75Q -2.316666666666667 43.75 1.6833333333333331 43.75L -1.6833333333333331 43.75Q 2.316666666666667 43.75 2.316666666666667 47.75L 2.316666666666667 47.75L 2.316666666666667 66Q 2.316666666666667 70 -1.6833333333333331 70L 1.6833333333333331 70Q -2.316666666666667 70 -2.316666666666667 66z" fill="rgba(255,76,81,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="round" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskumhx6hi)" pathTo="M -2.316666666666667 66L -2.316666666666667 47.75Q -2.316666666666667 43.75 1.6833333333333331 43.75L -1.6833333333333331 43.75Q 2.316666666666667 43.75 2.316666666666667 47.75L 2.316666666666667 47.75L 2.316666666666667 66Q 2.316666666666667 70 -1.6833333333333331 70L 1.6833333333333331 70Q -2.316666666666667 70 -2.316666666666667 66z" pathFrom="M -2.316666666666667 66L -2.316666666666667 66L 2.316666666666667 66L 2.316666666666667 66L 2.316666666666667 66L 2.316666666666667 66L 2.316666666666667 66L -2.316666666666667 66" cy="43.75" cx="2.316666666666667" j="0" val="30" barHeight="26.25" barWidth="4.633333333333334"></path><rect id="SvgjsRect1321" width="4.633333333333334" height="70" x="20.85" y="0" rx="4" ry="4" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#F0F2F8" class="apexcharts-backgroundBar"></rect><path id="SvgjsPath1323" d="M 20.85 66L 20.85 12.75Q 20.85 8.75 24.85 8.75L 21.483333333333334 8.75Q 25.483333333333334 8.75 25.483333333333334 12.75L 25.483333333333334 12.75L 25.483333333333334 66Q 25.483333333333334 70 21.483333333333334 70L 24.85 70Q 20.85 70 20.85 66z" fill="rgba(144,85,253,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="round" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskumhx6hi)" pathTo="M 20.85 66L 20.85 12.75Q 20.85 8.75 24.85 8.75L 21.483333333333334 8.75Q 25.483333333333334 8.75 25.483333333333334 12.75L 25.483333333333334 12.75L 25.483333333333334 66Q 25.483333333333334 70 21.483333333333334 70L 24.85 70Q 20.85 70 20.85 66z" pathFrom="M 20.85 66L 20.85 66L 25.483333333333334 66L 25.483333333333334 66L 25.483333333333334 66L 25.483333333333334 66L 25.483333333333334 66L 20.85 66" cy="8.75" cx="25.483333333333334" j="1" val="70" barHeight="61.25" barWidth="4.633333333333334"></path><rect id="SvgjsRect1324" width="4.633333333333334" height="70" x="44.016666666666666" y="0" rx="4" ry="4" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#F0F2F8" class="apexcharts-backgroundBar"></rect><path id="SvgjsPath1326" d="M 44.016666666666666 66L 44.016666666666666 30.25Q 44.016666666666666 26.25 48.016666666666666 26.25L 44.65 26.25Q 48.65 26.25 48.65 30.25L 48.65 30.25L 48.65 66Q 48.65 70 44.65 70L 48.016666666666666 70Q 44.016666666666666 70 44.016666666666666 66z" fill="rgba(255,76,81,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="round" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskumhx6hi)" pathTo="M 44.016666666666666 66L 44.016666666666666 30.25Q 44.016666666666666 26.25 48.016666666666666 26.25L 44.65 26.25Q 48.65 26.25 48.65 30.25L 48.65 30.25L 48.65 66Q 48.65 70 44.65 70L 48.016666666666666 70Q 44.016666666666666 70 44.016666666666666 66z" pathFrom="M 44.016666666666666 66L 44.016666666666666 66L 48.65 66L 48.65 66L 48.65 66L 48.65 66L 48.65 66L 44.016666666666666 66" cy="26.25" cx="48.65" j="2" val="50" barHeight="43.75" barWidth="4.633333333333334"></path><rect id="SvgjsRect1327" width="4.633333333333334" height="70" x="67.18333333333335" y="0" rx="4" ry="4" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#F0F2F8" class="apexcharts-backgroundBar"></rect><path id="SvgjsPath1329" d="M 67.18333333333335 66L 67.18333333333335 39Q 67.18333333333335 35 71.18333333333335 35L 67.81666666666669 35Q 71.81666666666669 35 71.81666666666669 39L 71.81666666666669 39L 71.81666666666669 66Q 71.81666666666669 70 67.81666666666669 70L 71.18333333333335 70Q 67.18333333333335 70 67.18333333333335 66z" fill="rgba(144,85,253,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="round" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskumhx6hi)" pathTo="M 67.18333333333335 66L 67.18333333333335 39Q 67.18333333333335 35 71.18333333333335 35L 67.81666666666669 35Q 71.81666666666669 35 71.81666666666669 39L 71.81666666666669 39L 71.81666666666669 66Q 71.81666666666669 70 67.81666666666669 70L 71.18333333333335 70Q 67.18333333333335 70 67.18333333333335 66z" pathFrom="M 67.18333333333335 66L 67.18333333333335 66L 71.81666666666669 66L 71.81666666666669 66L 71.81666666666669 66L 71.81666666666669 66L 71.81666666666669 66L 67.18333333333335 66" cy="35" cx="71.81666666666669" j="3" val="40" barHeight="35" barWidth="4.633333333333334"></path><rect id="SvgjsRect1330" width="4.633333333333334" height="70" x="90.35000000000001" y="0" rx="4" ry="4" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#F0F2F8" class="apexcharts-backgroundBar"></rect><path id="SvgjsPath1332" d="M 90.35000000000001 66L 90.35000000000001 21.5Q 90.35000000000001 17.5 94.35000000000001 17.5L 90.98333333333335 17.5Q 94.98333333333335 17.5 94.98333333333335 21.5L 94.98333333333335 21.5L 94.98333333333335 66Q 94.98333333333335 70 90.98333333333335 70L 94.35000000000001 70Q 90.35000000000001 70 90.35000000000001 66z" fill="rgba(144,85,253,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="round" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskumhx6hi)" pathTo="M 90.35000000000001 66L 90.35000000000001 21.5Q 90.35000000000001 17.5 94.35000000000001 17.5L 90.98333333333335 17.5Q 94.98333333333335 17.5 94.98333333333335 21.5L 94.98333333333335 21.5L 94.98333333333335 66Q 94.98333333333335 70 90.98333333333335 70L 94.35000000000001 70Q 90.35000000000001 70 90.35000000000001 66z" pathFrom="M 90.35000000000001 66L 90.35000000000001 66L 94.98333333333335 66L 94.98333333333335 66L 94.98333333333335 66L 94.98333333333335 66L 94.98333333333335 66L 90.35000000000001 66" cy="17.5" cx="94.98333333333335" j="4" val="60" barHeight="52.5" barWidth="4.633333333333334"></path><g id="SvgjsG1317" class="apexcharts-bar-goals-markers" style="pointer-events: none"><g id="SvgjsG1319" className="apexcharts-bar-goals-groups"></g><g id="SvgjsG1322" className="apexcharts-bar-goals-groups"></g><g id="SvgjsG1325" className="apexcharts-bar-goals-groups"></g><g id="SvgjsG1328" className="apexcharts-bar-goals-groups"></g><g id="SvgjsG1331" className="apexcharts-bar-goals-groups"></g></g></g><g id="SvgjsG1316" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1353" x1="-8.666666666666666" y1="0" x2="101.33333333333334" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" stroke-linecap="butt" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1354" x1="-8.666666666666666" y1="0" x2="101.33333333333334" y2="0" stroke-dasharray="0" stroke-width="0" stroke-linecap="butt" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1355" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1356" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1357" class="apexcharts-point-annotations"></g><rect id="SvgjsRect1358" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-zoom-rect"></rect><rect id="SvgjsRect1359" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe" class="apexcharts-selection-rect"></rect></g><g id="SvgjsG1341" class="apexcharts-yaxis" rel="0" transform="translate(-8, 0)"><g id="SvgjsG1342" class="apexcharts-yaxis-texts-g"></g></g><g id="SvgjsG1305" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend" style="max-height: 45px;"></div></div></div>
-                          <h6 class="text-center mb-0">Sessions</h6>
-                        <div class="resize-triggers"><div class="expand-trigger"><div style="width: 161px; height: 152px;"></div></div><div class="contract-trigger"></div></div></div>
-                      </div>
-                    </div>
-                    <!--/ Sessions chart -->
-                  </div>
-                </div>
+                
               </div>
             </div>          
             

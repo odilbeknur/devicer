@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-iky^3ulyn*-aicd5_jiqjh$&e6((&se(b+8z*pziwf2p2on(jp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.40.9.132', '70.70.0.68', 'localhost']
+ALLOWED_HOSTS = ['10.40.9.132', '70.70.0.68', '127.0.0.1']
 
 # Application definition
 PROJECT_APPS = [
@@ -132,6 +132,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = 'admin-index'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/main/dashboard'
+LOGOUT_REDIRECT_URL = '/a/login'
 

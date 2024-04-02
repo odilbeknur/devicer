@@ -200,7 +200,8 @@ class DeviceCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 def DeviceDetailView(request, pk):
     device = get_object_or_404(Device, inventory_number=pk)
     responsible = get_object_or_404(Responsible, id=device.responsible_id.id)
-    
+    model = get_object_or_404(Model, id=device.model_id.id)
+
     # Get the fullname from the device
         #form = ProductDetailUpdateForm(request.POST or None, instance=eq)
         #if request.method == 'POST' and form.is_valid():
@@ -208,7 +209,7 @@ def DeviceDetailView(request, pk):
         #    return redirect('device-detail', pk=eq.pk)
    
     print(responsible.image)
-    return render(request, 'admin/admin-detail.html', {'d': device ,'responsible':responsible})
+    return render(request, 'admin/admin-detail.html', {'d': device ,'responsible':responsible, 'm':model})
 
 
 
