@@ -46,7 +46,7 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
 
-        {% include 'admin\menu.html' %}
+        {% include 'admin/menu.html' %}
 
 
         <!-- Layout container -->
@@ -179,10 +179,10 @@
                                 </button>
                                 <div class="dropdown-menu">
                                   <a class="dropdown-item" href="{% url 'device-detail' pk=m.inventory_number %}"
-                                    ><i class="mdi mdi-pencil-outline me-1"></i> Подробнее</a
+                                    ><i class="mdi mdi-pen-outline me-1"></i> Подробнее</a
                                   >
-                                  <a class="dropdown-item" href="javascript:void(0);"
-                                    ><i class="mdi mdi-trash-can-outline me-1"></i>Изменить</a
+                                  <a class="dropdown-item" href="{% url 'device-update' pk=m.id %}"
+                                    ><i class="mdi mdi-pencil-can-outline me-1"></i>Изменить</a
                                   >
                                 </div>
                               </div>

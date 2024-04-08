@@ -6,27 +6,40 @@ from django.db.models import Count, Q
 from django.views.generic import ListView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import CategoryCreateForm, DeviceCreateForm, ResponsibleCreateForm, ModelCreateForm, NewDeviceForm
+from .forms import CategoryCreateForm, DeviceCreateForm, ResponsibleCreateForm, ModelCreateForm, NewDeviceForm, DeviceUpdateForm, ModelUpdateForm
 from django.contrib import messages
 import requests
+import os
 
 
 
 # Create your views here.
 def Dash_View(request):
-    categories = Category.objects.annotate(count=Count('name'))
-    active_url = request.path
-    return render(request, 'admin/admin-index.html', {'queryset': categories, 'active_url': active_url})
+    categories = Category.objects.annotate(device_count=Count('device_category'))
+    return render(request, 'admin/admin-index.html', {'queryset': categories})
 
 def baseview(request, pk):
     query = Device.objects.filter(category_id__id=pk)
     get_cat = Category.objects.filter(id=pk)
-    active_url = request.path
     return render(request, 'admin/admin-base.html', {'query': query, 'get_cat': get_cat})
+
+def deviceview(request):
+    query = Device.objects.all()
+    return render(request, 'admin/admin-device.html', {'query': query})
+
+
+def modelview(request):
+    query = Model.objects.all()
+    return render(request, 'admin/admin-model.html', {'query': query})
+
+
+def responsibleview(request):
+    responsibles = Responsible.objects.all()
+    return render(request, 'admin/responsible-base.html', {'responsibles': responsibles})
 
 def newview(request):
     #pull data from third party rest api
-    response = requests.get('http://10.40.9.25:8001/computers/')
+    response = requests.get('http://10.20.6.60:8000/computers')
     query = response.json()
 
 
@@ -37,92 +50,11 @@ def newview(request):
     
     return render(request, "admin/scan-view.html", {'query': query, 'form':form})
 
-def get_device_list(request):
-     
-    response = requests.get('http://10.40.9.25:8001/computers/')
-    query = response.json()
 
-
-    return render(request, 'admin/scanlist.html', {'query': query, 'form':form})
-
-def savescan(request):
-    comp_name = request.POST.get('comp_name')
-    user_name = request.POST.get('user_name')
-    ram = request.POST.get('ram')
-    ip_address = request.POST.get('ip_address')
-    mac_address = request.POST.get('mac_address')
-
-    # Create a new instance of your model and save it to the database
-    new_device = Device(
-        category_id = "Персональный компьютер",
-        model_id = "Dell",
-        responsible_id = "Дастан",
-        username = user_name,
-        room="200", 
-        processor="Test", 
-        memory=ram, 
-        ip_address=ip_address, 
-        mac_address=mac_address,
-        description = "Test"
-        )
-    new_device.save()
-    
-    return render(request, "admin/scan-view.html", {'query': query, 'form':form})
-
-def edit_student(request, student_pk):
-    student = Student.objects.get(pk=student_pk)
-    context = {}
-    context['student'] = student
-    context['form'] = StudentForm(initial={
-        'first_name':student.first_name,
-        'last_name': student.last_name,
-        'gender': student.gender,
-        'age': student.age,
-        'major': student.major
-    })
-    return render(request, 'partial/student/edit_student.html', context)
-
-def edit_student_submit(request, student_pk):
-    context = {}
-    student = Student.objects.get(pk=student_pk)
-    context['student'] = student
-    if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-        else:
-            return render(request, 'partial/student/edit_student.html', context)
-    return render(request, 'partial/student/student_row.html', context)    
-
-
-
-def models_view(request):
+def modelslist(request):
     category_id = request.GET.get('category_id')
     models  = Model.objects.filter(category_id=category_id)
     return render(request, 'admin/model-options.html', {"models": models})
-
-def add_selected_devices(request):
-    if request.method == 'POST':
-        selected_device_ids = request.POST.getlist('selected_devices')
-        if selected_device_ids:
-            try:
-                # Retrieve the selected devices from the database
-                selected_devices = Device.objects.filter(id__in=selected_device_ids)
-                
-                # Add any additional processing logic here if needed
-                for device in selected_devices:
-                    # Example additional processing: Update status or perform validation
-                    device.is_selected = True
-                    device.save()
-
-                return JsonResponse({'success': True})
-            except Device.DoesNotExist:
-                return JsonResponse({'success': False, 'error': 'One or more devices not found.'})
-        else:
-            return JsonResponse({'success': False, 'error': 'No devices selected.'})
-    else:
-        return JsonResponse({'success': False, 'error': 'Invalid request method.'})
-
 
 class CategoryCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Category
@@ -160,8 +92,7 @@ class ModelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         except Exception as e:
             messages.error(self.request, f'Error: {e}')
             return self.form_invalid(form)
-
-
+        
 
 class ResponsibleCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = Responsible
@@ -196,6 +127,7 @@ class DeviceCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
                 messages.error(self.request, f'Error: {e}')
                 print(f'Error: {e}')
                 return self.form_invalid(form)
+         
 
 def DeviceDetailView(request, pk):
     device = get_object_or_404(Device, inventory_number=pk)
@@ -208,33 +140,55 @@ def DeviceDetailView(request, pk):
         #    form.save()
         #    return redirect('device-detail', pk=eq.pk)
    
-    print(responsible.image)
     return render(request, 'admin/admin-detail.html', {'d': device ,'responsible':responsible, 'm':model})
 
+def ResponsibleDetailView(request, pk):
+    responsible = get_object_or_404(Responsible, id=pk)
+    device = Device.objects.filter(responsible_id=responsible.id)
+
+    response = requests.get('http://10.20.6.60:8000/computers')
+    query = response.json()
+
+    address = [item for item in query if item['user_name'] == responsible.username]
 
 
-def edit_device(request, student_pk):
-    student = Student.objects.get(pk=student_pk)
-    context = {}
-    context['student'] = student
-    context['form'] = StudentForm(initial={
-        'first_name':student.first_name,
-        'last_name': student.last_name,
-        'gender': student.gender,
-        'age': student.age,
-        'major': student.major
-    })
-    return render(request, 'partial/student/edit_student.html', context)
+    return render(request, 'admin/responsible-detail.html', {'responsible':responsible, 'device': device, 'address': address})
 
-def edit_device_submit(request, student_pk):
-    context = {}
-    student = Student.objects.get(pk=student_pk)
-    context['student'] = student
+def ModelUpdateView(request, pk):
+    model_instance = get_object_or_404(Model, pk=pk)
+    images = Model.objects.filter(image=model_instance.image)
+     
     if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
+        form = ModelUpdateForm(request.POST, request.FILES, instance=model_instance)
+        if form.is_valid():
+            # Check if a new image has been uploaded
+            if 'image' in request.FILES:
+                # Delete old image if it exists
+                if model_instance.image:
+                    old_image_path = model_instance.image.path
+                    if os.path.exists(old_image_path):
+                        os.remove(old_image_path)
+            form.save()
+            return redirect('models')  # Assuming 'models' is the URL name for the model list view
+    else:
+        form = ModelUpdateForm(instance=model_instance)
+
+    return render(request, 'admin/model-update.html', {'form': form, 'images':images})
+
+def DeviceUpdateView(request, pk):
+    device = get_object_or_404(Device, pk=pk)
+    key = device.category_id.id
+    form = DeviceUpdateForm(request.POST or None, instance=device)
+    
+    if request.method == 'POST':
         if form.is_valid():
             form.save()
-        else:
-            return render(request, 'partial/student/edit_student.html', context)
+            return redirect('base', pk=key)  
     else:
-        return render(request, 'partial/student/student_row.html', context)
+        form = DeviceUpdateForm(instance=device)
+
+    return render(request, 'admin/device-update.html', {'form': form})
+
+
+      
+

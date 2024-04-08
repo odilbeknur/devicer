@@ -1,7 +1,7 @@
  <!-- Menu -->
  <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="index.html" class="app-brand-link">
+      <a href="{% url 'dashboard'%}" class="app-brand-link">
         <span class="app-brand-logo demo me-1">
           <span style="color: var(--bs-primary)">
            
@@ -19,7 +19,7 @@
 
     <ul class="menu-inner py-1">
      <!-- Dashboards -->
-        {% if '/dashboard/' in active_url %}
+        {% if '/main/dashboard/' ==  request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
@@ -33,32 +33,56 @@
         <!-- Forms & Tables -->
         <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Категории и Модели</span></li>
         <!-- Form Validation -->
-        {% if '/category-create/' in active_url %}
+        {% if '/main/dashboard/responsibles/' == request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
         {% endif %}    
-            <a href="{% url 'category-create'%}" class="menu-link">
-            <i class="menu-icon tf-icons mdi mdi-devices"></i>
-            <div data-i18n="Form Validation">Категории</div>
+            <a href="{% url 'responsibles'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-account-group-outline"></i>
+            <div data-i18n="Form Validation">Ответственные</div>
+            <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
+            </a>
+        </li>
+         <!-- Data Tables -->
+         {% if '/main/dashboard/models' == request.path %}
+         <li class="menu-item active">
+         {% else %}
+         <li class="menu-item">
+         {% endif %}    
+             <a href="{% url 'models'%}" class="menu-link">
+             <i class="menu-icon tf-icons mdi mdi-network-pos"></i>
+             <div data-i18n="Datatables">Все модели</div>
+             <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
+             </a>
+         </li>
+        <!-- Data Tables -->
+        {% if '/main/dashboard/devices' == request.path %}
+        <li class="menu-item active">
+        {% else %}
+        <li class="menu-item">
+        {% endif %}    
+            <a href="{% url 'devices'%}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-view-gallery-outline"></i>
+            <div data-i18n="Datatables">Все устройства</div>
             <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
             </a>
         </li>
         <!-- Data Tables -->
-        {% if '/scan-view/' in active_url %}
+        {% if '/main/dashboard/scan-view/' == request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
         {% endif %}    
             <a href="{% url 'scan-view'%}" class="menu-link">
-            <i class="menu-icon tf-icons mdi mdi-grid"></i>
+            <i class="menu-icon tf-icons mdi mdi-select-search"></i>
             <div data-i18n="Datatables">Новые устройства</div>
             <!--<div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">5</div>-->
             </a>
         </li>
         <!-- Misc -->
         <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Создание объекта</span></li>
-        {% if '/device-create/' in active_url %}
+        {% if '/main/dashboard/add-device' == request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
@@ -68,7 +92,7 @@
             <div>Добавить устройство</div>
             </a>
         </li>
-        {% if active_url == "category-create" %}
+        {% if '/main/dashboard/category-create' == request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
@@ -78,7 +102,7 @@
             <div>Добавить категорию</div>
             </a>
         </li>
-        {% if '/model-create/' in active_url %}
+        {% if '/main/dashboard/model-create' == request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">
@@ -88,7 +112,7 @@
             <div>Добавить модель</div>
             </a>
         </li>
-        {% if '/responsible-create/' in active_url %}
+        {% if '/main/dashboard/responsible-create' == request.path %}
         <li class="menu-item active">
         {% else %}
         <li class="menu-item">

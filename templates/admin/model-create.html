@@ -46,7 +46,7 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
        
-        {% include 'admin\menu.html' %}
+        {% include 'admin/menu.html' %}
 
         <!-- Layout container -->
         <div class="layout-page">
@@ -140,7 +140,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Модель</h4>
+              <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Модель </h4>
 
               {% if messages %}
                   {% for message in messages %}
@@ -163,7 +163,7 @@
                     <div class="card-body" method="post" enctype="multipart/form-data">
                       <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% include 'admin\form.html' %}
+                        {% include 'admin/form.html' %}
                       </form>
                     </div>
                   </div>

@@ -46,7 +46,7 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         
-        {% include 'admin\menu.html' %}
+        {% include 'admin/menu.html' %}
 
         <!-- Layout container -->
         <div class="layout-page">
@@ -163,7 +163,7 @@
                     <div class="card-body" method="post" enctype="multipart/form-data">
                       <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% include 'admin\form.html' %}
+                        {% include 'admin/form.html' %}
                       </form>
                     </div>
                   </div>

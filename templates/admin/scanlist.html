@@ -1,16 +1,11 @@
 <tr>
-    <td>{{ d.comp_name }}</td>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ d.model }}</td>
     <td>{{ d.user_name }}</td>
     <td>{{ d.ram }}</td>
     <td>{{ d.network.ethernet.ip }}</td>
     <td>{{ d.network.ethernet.mac }}</td>
-    <td>
-        <td><button class='btn' 
-            hx-get="" 
-            hx-target="closest tr" 
-            hx-swap="outerHTML">
-            Edit
-    </td>
+    <td>{{ d.create_data }}</td>
     <td>
         <button
                 type="button"

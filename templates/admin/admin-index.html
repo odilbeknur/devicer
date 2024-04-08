@@ -45,7 +45,7 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        {% include 'admin\menu.html' %}
+        {% include 'admin/menu.html' %}
 
         <!-- Layout container -->
         <div class="layout-page">
@@ -142,13 +142,13 @@
               <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="row gy-4">
                   {% for m in queryset %}
-                    <div class="col-md-3 col-lg-4 mb-3">
+                    <div class="col-md-3 col-lg-3 mb-3">
                       <div class="card h-100 hover-card">
                         <div class="card-body">
                           <h5 class="card-title">{{ m.name }}</h5>
                           <h6 class="card-subtitle text-muted"></h6>
                           <img class="img-fluid d-flex mx-auto my-4 rounded" src="{{m.image.url}}" alt="Card image cap">
-                          <p class="card-text">Количество зарегистрированных устройств: {{m.count}}</p>
+                          <p class="card-text">Количество зарегистрированных устройств: {{m.device_count}}</p>
                           <a href="{% url 'base' pk=m.id %}" class="card-link">Посмотреть</a>
                         </div>
                       </div>
