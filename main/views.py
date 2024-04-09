@@ -40,15 +40,25 @@ def responsibleview(request):
 def newview(request):
     #pull data from third party rest api
     response = requests.get('http://10.20.6.60:8000/computers')
+    #response = requests.get('http://10.40.9.25:8003/computers')
     query = response.json()
 
+
+    device_data = Device.objects.values_list('mac_address', 'responsible_id')
+    responsible_mapping = {responsible.id: responsible.username for responsible in Responsible.objects.all()}
+    saved_data = [(mac_address, responsible_mapping.get(responsible_id)) for mac_address, responsible_id in device_data]
+
+
+    context = {
+        'saved_data' : saved_data
+    }
 
     form = NewDeviceForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         form.save()
         return redirect('scan-view')
     
-    return render(request, "admin/scan-view.html", {'query': query, 'form':form})
+    return render(request, "admin/scan-view.html", {'query': query, 'context': context, 'form':form})
 
 
 def modelslist(request):

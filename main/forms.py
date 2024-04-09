@@ -114,6 +114,7 @@ class DeviceCreateForm(forms.ModelForm):
     model_id = forms.ModelChoiceField(queryset=Model.objects.none(), label='Модель', 
                                       widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4", 'id':"models"}))
     responsible_id = forms.ModelChoiceField(queryset=Responsible.objects.all(), label='Ответственный', widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4"}))
+    room = forms.ModelChoiceField(queryset=Room.objects.all(), label='Комната', widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4"}))
     
     class Meta:
         model = Device

@@ -1,5 +1,13 @@
-<tr>
-    <td>{{ forloop.counter }}</td>
+    {% for device in context.saved_data %}
+        {% if d.network.ethernet.mac in device %}
+            {% if d.user_name in device %}
+            <tr style="background-color: #cdeeba;">
+            {% else %}
+            <tr style="background-color: #ee9296ab;">
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    <td >{{ forloop.counter }}</td>
     <td>{{ d.model }}</td>
     <td>{{ d.user_name }}</td>
     <td>{{ d.ram }}</td>
@@ -15,4 +23,4 @@
                 Сохранить
         </button>
     </td>
-</tr>
+</tr>   
