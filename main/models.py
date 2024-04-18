@@ -5,6 +5,8 @@ from PIL import Image
 import qrcode
 from devicer_admin.models import Responsible
 from rooms.models import Room
+import PIL
+from PIL import Image, ImageDraw
 
 class Category(models.Model):
     category_choices = [
@@ -47,10 +49,11 @@ class Device(models.Model):
     mac_address = models.CharField(max_length=50, blank=True)
     #ip_address = models.CharField(max_length=50, blank=True)
     inventory_number = models.CharField(max_length=10, unique=True, blank=True)
-    description = models.TextField(blank=True, null=True)
+    year = models.CharField(max_length=100)
     is_online = models.BooleanField(default=False)
     qr_code = models.ImageField(blank=True, upload_to='qr-code')
-    
+    time =  models.DateTimeField(auto_now_add=True)
+
     def generate_inventory_number(self):
         category_code = self.category_id.id if self.category_id else ""
         model_code = self.model_id.id if self.model_id else ""
@@ -58,8 +61,11 @@ class Device(models.Model):
         last_increment = Device.objects.aggregate(models.Max('id'))['id__max'] or 0
         increment = str(last_increment + 1).zfill(4) 
         return f"{category_code}{model_code}{room_number}{increment}"
+    
+    
 
     def generate_qr_code(self):
+        
         qr_data = f'http://10.40.9.25:8000/main/dashboard/{self.inventory_number}/device-detail'
         try:
             return qrcode.make(qr_data)

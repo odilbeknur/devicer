@@ -18,7 +18,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-
+    <link rel="icon" type="image/x-icon" href="{% static 'admin/img/avatars/face.jpg' %}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -155,8 +155,8 @@
                             <th>Модель</th>
                             <th>Ответственный</th>
                             <th>Комната</th>
-                            <th>IP-адрес</th>
                             <th>MAC-адрес</th>
+                            <th>IP-адрес</th>
                             <th>Статус</th>
                           </tr>
                         </thead>
@@ -169,8 +169,8 @@
                             </td>
                             <td>{{ m.responsible_id}}</td>
                             <td>{{ m.room}}</td>
-                            <td>{{ m.ip_address}}</td>
                             <td>{{ m.mac_address}}</td>
+                            <td>{{ m.time}}</td>
                             <td>{{ m.is_online}}</td>
                             <td>
                               <div class="dropdown">
@@ -263,9 +263,7 @@
 
     <!-- Main JS -->
     <script src="{% static 'admin/vendor/js/menu.js'%}"></script>
-    
 
-    <script src="{% static 'admin/vendor/libs/popper/popper.js' %}"></script>
     <!-- Page JS -->
     <script src="{% static 'admin/js/dashboards-analytics.js'%}"></script>
   </body>

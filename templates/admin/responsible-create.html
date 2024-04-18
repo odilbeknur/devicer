@@ -18,6 +18,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'admin/img/avatars/face.jpg' %}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -161,7 +162,9 @@
                       <small class="text-muted float-end">№4</small>
                     </div>
                     <div class="card-body" method="post" enctype="multipart/form-data">
-                      <form method="post" enctype="multipart/form-data">
+                      <div id="alert-box"></div>
+                      <div id="image-box" class="mb-3"></div>
+                      <form method="post" enctype="multipart/form-data" id="image-form">
                         {% csrf_token %}
                         {% include 'admin/form.html' %}
                       </form>
@@ -190,7 +193,11 @@
     <script src="{% static 'admin/vendor/libs/jquery/jquery.js'%}"></script>
     <script src="{% static 'admin/vendor/js/bootstrap.js'%}"></script>
 
-    <!-- endbuild -->
+    <!-- cropper -->
+    <script src="{% static 'crop-image.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.css">
+    
 
     <!-- Vendors JS -->
     <script src="{% static 'admin/vendor/libs/apex-charts/apexcharts.js'%}"></script>
@@ -199,7 +206,6 @@
     <script src="{% static 'admin/vendor/js/menu.js'%}"></script>
     
 
-    <script src="{% static 'admin/vendor/libs/popper/popper.js' %}"></script>
     <!-- Page JS -->
     <script src="{% static 'admin/js/dashboards-analytics.js'%}"></script>
   </body>

@@ -18,7 +18,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-
+    <link rel="icon" type="image/x-icon" href="{% static 'admin/img/avatars/face.jpg' %}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -151,10 +151,11 @@
                       <table class="table table-hover">
                         <thead>
                           <tr>
+                            <th>№</th>
+                            <th>Категория</th>
                             <th>Модель</th>
                             <th>Ответственный</th>
                             <th>Комната</th>
-                            <th>IP-адрес</th>
                             <th>MAC-адрес</th>
                             <th>Статус</th>
                           </tr>
@@ -163,12 +164,15 @@
                         {% for d in query %}
   
                           <tr>
+                            <td >{{ forloop.counter }}</td>
+                            <td>
+                              <span class="fw-medium">{{ d.category_id}}</span>
+                            </td>
                             <td>
                               <span class="fw-medium">{{ d.model_id}}</span>
                             </td>
                             <td>{{ d.responsible_id}}</td>
                             <td>{{ d.room}}</td>
-                            <td>{{ d.ip_address}}</td>
                             <td>{{ d.mac_address}}</td>
                             <td>{{ d.is_online}}</td>
                           </tr>
@@ -245,9 +249,7 @@
 
     <!-- Main JS -->
     <script src="{% static 'admin/vendor/js/menu.js'%}"></script>
-    
 
-    <script src="{% static 'admin/vendor/libs/popper/popper.js' %}"></script>
     <!-- Page JS -->
     <script src="{% static 'admin/js/dashboards-analytics.js'%}"></script>
   </body>

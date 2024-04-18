@@ -4,7 +4,7 @@ from .models import Device, Category, Responsible, Model
 from rooms.models import Room
 from django.core.exceptions import ValidationError
 from django.utils.safestring import SafeString
-
+from datetime import datetime
 
 department_choices = (
         ('', 'Выберите отдел'),
@@ -27,6 +27,9 @@ status_choices = (
        ('True', 'В сети'),
        ('False', 'Не в сети'),
     )    
+
+year_choices = [(str(year), str(year)) for year in range(2000, datetime.now().year)]
+
 
 
 
@@ -115,10 +118,11 @@ class DeviceCreateForm(forms.ModelForm):
                                       widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4", 'id':"models"}))
     responsible_id = forms.ModelChoiceField(queryset=Responsible.objects.all(), label='Ответственный', widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4"}))
     room = forms.ModelChoiceField(queryset=Room.objects.all(), label='Комната', widget=forms.Select(attrs={'class': "form-floating form-floating-outline mb-4"}))
+    year = forms.ChoiceField(choices=year_choices, label='Год')
     
     class Meta:
         model = Device
-        fields = ['category_id', 'model_id', 'responsible_id', 'room', 'mac_address', 'description']
+        fields = ['category_id', 'model_id', 'responsible_id', 'room', 'mac_address', 'year']
         labels = {
             'category_id': 'Категория',
             'model_id': 'Модель',
@@ -142,17 +146,17 @@ class DeviceCreateForm(forms.ModelForm):
             self.fields['model_id'].queryset = Model.objects.filter(category_id=category_id)
         
 class DeviceUpdateForm(forms.ModelForm):
+    year = forms.ChoiceField(choices=year_choices, label='Год')
     
     class Meta:
         model = Device
-        fields = ['category_id', 'model_id', 'responsible_id', 'room', 'mac_address', 'description']
+        fields = ['category_id', 'model_id', 'responsible_id', 'room', 'mac_address', 'year']
         labels = {
             'category_id': 'Категория',
             'model_id': 'Модель',
             'responsible_id': 'Ответственный',
             'room': 'Комната',
             'mac_address': 'MAC-адрес',
-            'description': 'Описание',
         }
     
     def __init__(self, *args, **kwargs):
