@@ -11,8 +11,12 @@
     <td>{{ d.model }}</td>
     <td>{{ d.user_name }}</td>
     <td>{{ d.ram }}</td>
-    <td>{{ d.network.ethernet.ip }}</td>
-    <td>{{ d.network.ethernet.mac }}</td>
+    {% for net in d.network %}
+    {% if  'Ethernet' in net.network_type %}    
+    <td>{{ net.ip}}</td>
+    <td>{{ net.mac }}</td>
+    {% endif %}
+    {% endfor %}
     <td>{{ d.create_data }}</td>
     <!--<td>
         <button
