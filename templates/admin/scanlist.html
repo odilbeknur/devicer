@@ -11,12 +11,20 @@
     <td>{{ d.model }}</td>
     <td>{{ d.user_name }}</td>
     <td>{{ d.ram }}</td>
+    <td>
     {% for net in d.network %}
-    {% if  'Ethernet' in net.network_type %}    
-    <td>{{ net.ip}}</td>
-    <td>{{ net.mac }}</td>
+    {% if  'ethernet' or 'wireless_network' in net.network_type %}    
+    {{ net.network_type }}: <strong>{{ net.ip }}</strong><br>
     {% endif %}
     {% endfor %}
+    </td>
+    <td>
+    {% for net in d.network %}
+    {% if  'ethernet' or 'wireless_network' in net.network_type %}    
+    {{ net.network_type }}: <strong>{{ net.mac }}</strong><br>
+    {% endif %}
+    {% endfor %}
+    </td>
     <td>{{ d.create_data }}</td>
     <!--<td>
         <button
