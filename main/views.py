@@ -39,8 +39,8 @@ def responsibleview(request):
 
 def newview(request):
     #pull data from third party rest api
-    #response = requests.get('http://10.20.6.60:8000/computers')
-    response = requests.get('http://10.40.9.134:8000/computers')
+    response = requests.get('http://10.20.6.60:8000/computers')
+    #response = requests.get('http://10.40.9.134:8000/computers')
     query = response.json()
 
 

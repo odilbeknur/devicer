@@ -66,7 +66,7 @@ class Device(models.Model):
 
     def generate_qr_code(self):
         
-        qr_data = f'http://10.40.9.25:8000/main/dashboard/{self.inventory_number}/device-detail'
+        qr_data = f'http://10.20.6.60:8003/main/dashboard/{self.inventory_number}/device-detail'
         try:
             return qrcode.make(qr_data)
         except Exception as e:
